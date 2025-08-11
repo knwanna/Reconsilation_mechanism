@@ -1,5 +1,6 @@
 ﻿from dataclasses import dataclass
 from enum import Enum
+from typing import Optional  # <-- Add this import
 
 class MatchType(str, Enum):
     EXACT = "exact"
