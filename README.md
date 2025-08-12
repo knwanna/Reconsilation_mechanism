@@ -44,16 +44,10 @@ C:.
 
 ## Installation (Windows)
 
-### Prerequisites
-```powershell
-python --version
-winget install -e --id Git.Git
-winget install -e --id Microsoft.VisualStudioCode
-```
 
 ### Setup
 ```powershell
-git clone https://github.com/your/repo.git
+git clone https://github.com/knwanna/Reconsilation_mechanism.git
 cd Reconciliation_mechanism
 
 python -m venv .venv
