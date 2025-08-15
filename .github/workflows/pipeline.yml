@@ -1,0 +1,43 @@
+name: Build and Test
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      redis:
+        image: redis
+        ports: ["6379:6379"]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install pytest pytest-cov
+    - name: Run tests
+      run: |
+        pytest --cov=./ --cov-report=xml
+    - name: Upload coverage
+      uses: codecov/codecov-action@v1
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Node
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+    - run: |
+        cd interface
+        npm install
+        npm run build
+    - name: Archive production build
+      uses: actions/upload-artifact@v2
+      with:
+        name: frontend-build
+        path: interface/dist
