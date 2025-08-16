@@ -85,3 +85,6 @@ proto_v1/evaluation_results/
 
 # Project specific
 interface/Create/
+*.pyc
+*.pyc
+adapters/repositories/__pycache__/csv_repository.cpython-312.pyc
