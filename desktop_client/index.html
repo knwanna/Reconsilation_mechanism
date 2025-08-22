@@ -1,47 +1,18 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Reconciliation Client</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Reconciliation Client</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        input, button { padding: 10px; margin: 5px; }
+        #results { margin-top: 20px; }
+    </style>
 </head>
-<body class="bg-gray-100 font-sans">
-    <div class="container mx-auto p-4">
-        <h1 class="text-2xl font-bold mb-4">Data Reconciliation Client</h1>
-        <p class="mb-4">Enter a query to reconcile against the mock literary works dataset.</p>
-
-        <div class="mb-4">
-            <input id="api-url-input" type="text" value="http://localhost:8000"
-                   class="border border-gray-300 rounded p-2 w-full mb-2"
-                   placeholder="API URL" aria-label="API URL">
-            <input id="query-input" type="text"
-                   class="border border-gray-300 rounded p-2 w-full"
-                   placeholder="Enter query (e.g., George Orwell)" aria-label="Query">
-        </div>
-
-        <button id="reconcile-btn"
-                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                aria-label="Reconcile">Reconcile</button>
-
-        <div id="status-message" class="mt-4 text-sm" aria-live="polite">
-            Enter a query and click 'Reconcile' to see results.
-        </div>
-
-        <div class="mt-4">
-            <table id="results-table" class="w-full border-collapse hidden">
-                <thead>
-                    <tr class="bg-gray-200">
-                        <th class="border p-2">Name</th>
-                        <th class="border p-2">Score</th>
-                        <th class="border p-2">Match Type</th>
-                    </tr>
-                </thead>
-                <tbody id="results-body"></tbody>
-            </table>
-        </div>
-    </div>
-
+<body>
+    <h1>Publication Reconciliation</h1>
+    <input id="query" type="text" placeholder="Enter query (e.g., Tolkien)">
+    <button onclick="search()">Search</button>
+    <div id="results"></div>
     <script src="renderer.js"></script>
 </body>
 </html>

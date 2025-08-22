@@ -1,9 +1,10 @@
 ﻿from dataclasses import dataclass
+from typing import List
 
 @dataclass
-class Record:
-    id: int
-    title: str
-    author: str
-    year: int
-    canonical_id: str
+class MatchResult:
+    id: str
+    name: str
+    score: float
+    match: bool
+    type: List[str]
