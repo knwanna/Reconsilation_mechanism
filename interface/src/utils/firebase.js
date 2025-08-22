@@ -1,4 +1,4 @@
-﻿import { initializeApp } from 'firebase/app';
+import { initializeApp } from 'firebase/app';
 import { getAuth, getFirestore } from 'firebase/auth';
 
 export const initFirebase = () => {

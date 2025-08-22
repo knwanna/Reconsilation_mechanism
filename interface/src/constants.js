@@ -11,10 +11,3 @@ export const fileAccept = {
   'gis': '.shp, .kml, .geojson', 
   'all-files': '*'
 };
-
-
-export const RECON_STATUS = {
-  MATCHED: 'M',
-  UNMATCHED: 'U',
-  PENDING: 'P'
-};
