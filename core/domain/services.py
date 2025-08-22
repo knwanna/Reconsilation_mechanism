@@ -1,54 +1,50 @@
-﻿from abc import ABC, abstractmethod
-from .models import Publication, MatchResult, MatchType
-from typing import List
-
-class Normalizer(ABC):
-    @abstractmethod
-    def normalize(self, text: str) -> str:
-        pass
-
-class BasicNormalizer(Normalizer):
-    def normalize(self, text: str) -> str:
-        return text.lower().strip()
+﻿from typing import List, Dict
+from ..ports.matching_strategy import MatchingStrategy
+from ..domain.models import Record
 
 class ReconciliationService:
-    def __init__(self, repository: 'PublicationRepository', normalizer: Normalizer = BasicNormalizer()):
-        self.repo = repository
-        self.normalizer = normalizer
-    
-    def reconcile(self, query: str, limit: int = 5) -> List[MatchResult]:
-        if not query:
-            return []
-            
-        norm_query = self.normalizer.normalize(query)
-        publications = self.repo.get_all()
-        results = []
-        
-        for pub in publications:
-            if not pub.title:
-                continue
-                
-            norm_title = self.normalizer.normalize(pub.title)
-            score, match_type, details = self._calculate_match(norm_query, norm_title)
-            
-            if score > 0:
-                results.append(MatchResult(
-                    publication=pub,
-                    score=score,
-                    match_type=match_type,
-                    match_details=details
-                ))
-        
-        return sorted(results, key=lambda x: x.score, reverse=True)[:limit]
-    
-    def _calculate_match(self, query: str, title: str) -> tuple:
-        if query == title:
-            return (1.0, MatchType.EXACT, "Exact match found")
-        if title.startswith(query):
-            return (0.9, MatchType.STARTS_WITH, f"Title starts with '{query}'")
-        if query in title:
-            return (0.8, MatchType.PARTIAL, f"Query found within title")
-        return (0.0, MatchType.NONE, "No match found")
+    """Core orchestrator for the reconciliation process, coordinating strategies and repository."""
 
-class DatasetLoadError(Exception):
-    pass
+    def __init__(self, strategies: List[MatchingStrategy], repository: 'Repository') -> None:
+        """Initialize the service with a list of matching strategies and a repository.
+
+        Args:
+            strategies: List of MatchingStrategy instances to evaluate queries.
+            repository: Repository instance providing access to records.
+        """
+        self.strategies = strategies
+        self.repository = repository
+
+    def reconcile(self, query: str) -> List[Dict]:
+        """Reconcile a query string against records using all available strategies.
+
+        Args:
+            query: The input query string to match against records.
+
+        Returns:
+            A sorted list of dictionaries containing match results with id, name, score, and match_type.
+        """
+        normalized_query = query.lower().strip()
+        records = self.repository.get_all_records()
+        results = []
+
+        for record in records:
+            max_score = 0.0
+            best_strategy = None
+
+            for strategy in self.strategies:
+                score = strategy.get_match_score(normalized_query, record.title)
+                if score > max_score:
+                    max_score = score
+                    best_strategy = strategy
+
+            if max_score > 0:
+                results.append({
+                    "id": record.canonical_id,
+                    "name": record.title,
+                    "score": max_score,
+                    "match": max_score > 0.9,
+                    "type": [best_strategy.__class__.__name__]
+                })
+
+        return sorted(results, key=lambda x: x["score"], reverse=True)

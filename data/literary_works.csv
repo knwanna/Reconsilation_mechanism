@@ -1,6 +1,31 @@
 ﻿id,title,author,year,canonical_id
-1,The Hobbit,J.R.R. Tolkien,1937,tolkien-1
-2,1984,George Orwell,1949,orwell-1
-3,To Kill a Mockingbird,Harper Lee,1960,lee-1
-4,The Great Gatsby,F. Scott Fitzgerald,1925,fitzgerald-1
-5,Pride and Prejudice,Jane Austen,1813,austen-1
+1,"The Hobbit","J.R.R. Tolkien",1937,tolkien-1
+2,"1984","George Orwell",1949,orwell-1
+3,"To Kill a Mockingbird","Harper Lee",1960,lee-1
+4,"Animal Farm","George Orwell",1949,orwell-2
+5,"Lord of the Rings","J.R.R. Tolkien",1954,tolkien-2
+6,"The Silmarillion","J.R.R. Tolkien",1977,tolkien-3
+7,"The Great Gatsby","F. Scott Fitzgerald",1925,fitzgerald-1
+8,"Pride and Prejudice","Jane Austen",1813,austen-1
+9,"Sense and Sensibility","Jane Austen",1811,austen-2
+10,"Emma","Jane Austen",1815,austen-3
+11,"The Lord of the Rings: The Fellowship","J.R.R. Tolkien",1954,tolkien-4
+12,"Great Gatsbye","F. Scott Fitzgerald",1925,fitzgerald-2
+13,"J.R.R. Tolkien","J.R.R. Tolkien",0,tolkien-author
+14,"George Orwell","George Orwell",0,orwell-author
+15,"Jane Austen","Jane Austen",0,austen-author
+16,"NonExistentBookTitle","Unknown",0,unknown-1
+17,"Adventures of Huckleberry Finn","Mark Twain",1884,twain-1
+18,"Adventures of Tom Sawyer","Mark Twain",1876,twain-2
+19,"Brave New World","Aldous Huxley",1932,huxley-1
+20,"Tender is the Night","F. Scott Fitzgerald",1934,fitzgerald-3
+21,"Hobbit: An Unexpected Journey","J.R.R. Tolkien",1937,tolkien-5
+22,"Gatsbyy","F. Scott Fitzgerald",1925,fitzgerald-4
+23,"Pride & Prejudice","Jane Austen",1813,austen-4
+24,"1984","G. Orwell",1949,orwell-3
+25,"Lord of the Flies","William Golding",1954,golding-1
+26,"First National Bank","Unknown",0,unknown-2
+27,"First National Bank History","Unknown",0,unknown-3
+28,"J.R.R. Tolkin","J.R.R. Tolkien",0,tolkien-author-2
+29,"Catch-22","Joseph Heller",1961,heller-1
+30,"The Catcher in the Rye","J.D. Salinger",1951,salinger-1

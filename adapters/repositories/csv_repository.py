@@ -1,24 +1,44 @@
-﻿import csv
+﻿import logging
+import pandas as pd
 from typing import List
-from core.domain.models import Publication
-from core.domain.services import DatasetLoadError
+from ..ports.repositories import Repository
+from ..core.domain.models import Record
 
-class CSVPublicationRepository:
-    def __init__(self, csv_path: str):
-        self.data = []
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+class CsvRepository(Repository):
+    """Repository adapter that reads records from a CSV file."""
+
+    def __init__(self, file_path: str) -> None:
+        """Initialize the repository with the path to the CSV file.
+
+        Args:
+            file_path: Path to the CSV file containing records.
+        """
+        self.file_path = file_path
+
+    def get_all_records(self) -> List[Record]:
+        """Retrieve all records from the CSV file.
+
+        Returns:
+            A list of Record objects.
+
+        Raises:
+            FileNotFoundError: If the CSV file is not found.
+            Exception: For other errors during CSV processing.
+        """
         try:
-            with open(csv_path, newline='', encoding='utf-8-sig') as f:
-                reader = csv.DictReader(f)
-                for row in reader:
-                    self.data.append(Publication(
-                        id=row['id'].strip(),
-                        title=row['title'].strip(),
-                        authors=row['author'].strip(),
-                        publication_year=int(row['year']) if row.get('year') else None,
-                        canonical_id=row.get('canonical_id', '').strip()
-                    ))
+            df = pd.read_csv(self.file_path)
+            records = [
+                Record(id=row['id'], title=row['title'], author=row['author'], 
+                       year=row['year'], canonical_id=row['canonical_id'])
+                for _, row in df.iterrows()
+            ]
+            return records
+        except FileNotFoundError:
+            logger.error(f"CSV file not found: {self.file_path}")
+            raise
         except Exception as e:
-            raise DatasetLoadError(f"Failed to load CSV: {str(e)}")
-
-    def get_all(self) -> List[Publication]:
-        return self.data
+            logger.error(f"Error reading CSV file: {str(e)}")
+            raise

@@ -1,8 +1,13 @@
 ﻿from abc import ABC, abstractmethod
 from typing import List
-from core.domain.models import Publication
+from ..domain.models import Record
 
-class PublicationRepository(ABC):
+class Repository(ABC):
     @abstractmethod
-    def get_all(self) -> List[Publication]:
+    def get_all_records(self) -> List[Record]:
+        """Retrieve all records from the data source.
+
+        Returns:
+            A list of Record objects.
+        """
         pass

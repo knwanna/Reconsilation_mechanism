@@ -1,5 +1,11 @@
-﻿fastapi
-uvicorn
-pydantic
-pandas
-python-multipart
+﻿fastapi==0.115.2
+uvicorn==0.32.0
+pandas==2.2.2
+jaro-winkler==2.0.5
+pydantic==2.9.2
+pytest==8.3.2
+pytest-cov==5.0.0
+flake8==7.1.1
+black==24.8.0
+locust==2.31.6
+faker==30.3.0
