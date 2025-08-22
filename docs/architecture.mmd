@@ -1,18 +1,10 @@
-﻿C4Component
-  title Hexagonal Architecture for Reconciliation Service
-  Person(EndUser, "End User", "Interacts with the desktop client")
-  System_Boundary(ReconciliationAPI, "Reconciliation Service") {
-    Container(FastAPI, "FastAPI Endpoint", "FastAPI", "Handles HTTP requests")
-    Container(ReconciliationService, "Reconciliation Service", "Python", "Orchestrates matching logic")
-    Container(CsvRepository, "CSV Repository", "Python", "Reads data from CSV files")
-    Container(Strategies, "Matching Strategies", "Python", "Exact, StartsWith, Fuzzy Jaro-Winkler")
-  }
-  Container(DesktopClient, "Desktop Client", "Electron", "UI for end users")
-  SystemExt(OpenRefine, "OpenRefine Software", "External tool using the API")
-
-  Rel(EndUser, DesktopClient, "Uses")
-  Rel(DesktopClient, FastAPI, "Sends HTTP requests")
-  Rel(OpenRefine, FastAPI, "Sends HTTP requests")
-  Rel(FastAPI, ReconciliationService, "Delegates requests")
-  Rel(ReconciliationService, Strategies, "Uses strategies")
-  Rel(ReconciliationService, CsvRepository, "Reads data")
+﻿graph TD
+    A[Client] --> B[Flask Entrypoint]
+    B --> C[ReconciliationEntrypoint]
+    C --> D[ReconciliationService]
+    D --> E[Matching Strategies]
+    D --> F[CsvRepository]
+    E --> G[ExactMatchStrategy]
+    E --> H[StartsWithStrategy]
+    E --> I[FuzzyJaroWinklerStrategy]
+    F --> J[literary_works.csv]

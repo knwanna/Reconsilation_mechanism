@@ -1,5 +1,8 @@
-﻿const { contextBridge } = require('electron');
+﻿const { contextBridge, ipcRenderer } = require('electron');
 
-contextBridge.exposeInMainWorld('electronAPI', {
-  // Expose safe APIs if needed in the future
+contextBridge.exposeInMainWorld('api', {
+    sendQuery: async (query) => {
+        const response = await fetch('http://localhost:8000/reconcile?query=' + encodeURIComponent(query));
+        return response.json();
+    }
 });

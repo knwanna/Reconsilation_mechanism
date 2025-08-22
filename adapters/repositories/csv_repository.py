@@ -1,24 +1,18 @@
-﻿import csv
-from typing import List
-from core.domain.models import Publication
-from core.domain.services import DatasetLoadError
+﻿import pandas as pd
+from ports.repositories import Repository
 
-class CSVPublicationRepository:
-    def __init__(self, csv_path: str):
-        self.data = []
-        try:
-            with open(csv_path, newline='', encoding='utf-8-sig') as f:
-                reader = csv.DictReader(f)
-                for row in reader:
-                    self.data.append(Publication(
-                        id=row['id'].strip(),
-                        title=row['title'].strip(),
-                        authors=row['author'].strip(),
-                        publication_year=int(row['year']) if row.get('year') else None,
-                        canonical_id=row.get('canonical_id', '').strip()
-                    ))
-        except Exception as e:
-            raise DatasetLoadError(f"Failed to load CSV: {str(e)}")
+class CsvRepository(Repository):
+    def __init__(self, file_path):
+        self.df = pd.read_csv(file_path)
 
-    def get_all(self) -> List[Publication]:
-        return self.data
+    def search(self, query, limit=3):
+        results = []
+        for _, row in self.df.iterrows():
+            if query.lower() in row['title'].lower() or query.lower() in row['author'].lower():
+                results.append({
+                    'id': row['canonical_id'],
+                    'name': row['title'],
+                    'author': row['author'],
+                    'year': row['year']
+                })
+        return results[:limit]
