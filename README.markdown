@@ -11,7 +11,7 @@ A Flask-based API for reconciling data against various data sources, compliant w
 - CI/CD integration with GitHub Actions
 
 ## Architecture
-The API follows a Hexagonal Architecture (Ports and Adapters pattern), ensuring separation of concerns and easy swapping of data sources or matching strategies. See the [architecture diagram](https://github.com/user/data-reconciliation-api/blob/main/docs/architecture.png) for details.
+The API follows a Hexagonal Architecture (Ports and Adapters pattern), ensuring separation of concerns and easy swapping of data sources or matching strategies. See the [architecture diagram](https://github.com/user/data-reconciliation-api/blob/main/docs/architectur.mmd) for details.
 
 ## Installation
 1. Clone the repository:
