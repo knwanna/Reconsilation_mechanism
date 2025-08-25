@@ -17,7 +17,7 @@ The API follows a Hexagonal Architecture (Ports and Adapters pattern), ensuring 
 1. Clone the repository:
    ```bash
    git clone https://github.com/knwanna/Reconsilation_mechanism.git
-   cd data-reconciliation-api
+   cd Reconsilation_mechanism
    ```
 2. Create and activate a virtual environment:
    ```bash
